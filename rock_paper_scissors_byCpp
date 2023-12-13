@@ -1,0 +1,88 @@
+#include <iostream>
+#include <algorithm>
+#include <random>
+using namespace std;
+
+int main()
+{
+    int randomNum, playerScore = 0, computerScore = 0;
+    char choices[] = {'r', 'p', 's', 'q'};
+    char player, computer;
+    cout << "Welcome to rock_paper_scissors game!\n";
+    cout << "'r' for rock, 'p' for paper, 's' for scissors, 'q' for quit\n";
+
+    // Game loop
+    while (true)
+    {
+        cout << "Enter your choice: ";
+        cin >> player;
+        player = tolower(player);
+        if (find(begin(choices), end(choices), player) == end(choices))
+        {
+            cout << "Invalid Input!\n";
+            continue;
+        }
+        else if (player == 'q')
+        {
+            cout << "Your Score: " << playerScore << '\t';
+            cout << "Computer's Score: " << computerScore << '\n';
+            if (playerScore > computerScore) cout << "You Win!\n";
+            else if (playerScore < computerScore) cout << "Computer Wins!\n";
+            else cout << "Draw!\n";
+            break;
+        }
+        
+        random_device rd;
+        uniform_int_distribution<int> dist(0, 2);
+        randomNum = dist(rd);
+        computer = choices[randomNum];
+        cout << "Computer Choice: " << computer << endl;
+        
+        if (player == computer) cout << "Draw round!\n";
+        else 
+        {
+            switch (player)
+            {
+                case 'r':
+                    switch (computer)
+                    {
+                    case 'p':
+                        cout << "Computer Wins the round!\n";
+                        computerScore++;
+                        break;
+                    case 's':
+                        cout << "You Win the round\n";
+                        playerScore++;
+                        break;
+                    }
+                    break;
+                case 'p':
+                    switch (computer)
+                    {
+                    case 's':
+                        cout << "Computer Wins the round!\n";
+                        computerScore++;
+                        break;
+                    case 'r':
+                        cout << "You Win the round\n";
+                        playerScore++;
+                        break;
+                    }
+                    break;
+                case 's':
+                    switch (computer)
+                    {
+                    case 'p':
+                        cout << "You Win the round\n";
+                        playerScore++;
+                        break;
+                    case 'r':
+                        cout << "Computer Wins the round!\n";
+                        computerScore++;
+                        break;
+                    }
+                    break;
+            }
+        }
+    }
+}
